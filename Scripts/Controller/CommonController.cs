@@ -16,6 +16,8 @@ public class CommonController : MonoBehaviour
         spawer,
         item,
     };
+    public static readonly string SpeedX = "SpeedX";
+    public static readonly string SpeedZ = "SpeedZ";
 
     /// <summary>
     /// 全てのアイテム
