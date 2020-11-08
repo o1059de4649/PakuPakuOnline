@@ -74,29 +74,47 @@ public class PlayerMoveController : MonoBehaviour
     /// ムーブメント
     /// </summary>
     void Movement() {
+        //基本操作
         if (Input.GetKey(KeyCode.W))
         {
             characterController.Move(x_pivot.transform.forward * moveSpeed);
             move_z += Time.deltaTime * multi_anime;
-            ParentRotateSet();
+            ParentRotateSet(KeyCode.W);
         }
         if (Input.GetKey(KeyCode.D))
         {
             characterController.Move(x_pivot.transform.right * moveSpeed);
             move_x += Time.deltaTime * multi_anime;
-            ParentRotateSet();
+            ParentRotateSet(KeyCode.D);
         }
         if (Input.GetKey(KeyCode.S))
         {
-            characterController.Move(x_pivot.transform.forward * -moveSpeed);
+            characterController.Move(-x_pivot.transform.forward * moveSpeed);
             move_z -= Time.deltaTime * multi_anime;
-            ParentRotateSet();
+            ParentRotateSet(KeyCode.S);
         }
         if (Input.GetKey(KeyCode.A))
         {
-            characterController.Move(x_pivot.transform.right * -moveSpeed);
+            characterController.Move(-x_pivot.transform.right * moveSpeed);
             move_x -= Time.deltaTime * multi_anime;
-            ParentRotateSet();
+            ParentRotateSet(KeyCode.A);
+        }
+        //斜め移動
+        if (Input.GetKey(KeyCode.W) && Input.GetKey(KeyCode.A))
+        {
+            ParentRotateSet(KeyCode.W, KeyCode.A);
+        }
+        if (Input.GetKey(KeyCode.W) && Input.GetKey(KeyCode.D))
+        {
+            ParentRotateSet(KeyCode.W, KeyCode.D);
+        }
+        if (Input.GetKey(KeyCode.S) && Input.GetKey(KeyCode.A))
+        {
+            ParentRotateSet(KeyCode.S, KeyCode.A);
+        }
+        if (Input.GetKey(KeyCode.S) && Input.GetKey(KeyCode.D))
+        {
+            ParentRotateSet(KeyCode.S, KeyCode.D);
         }
         if (Input.GetKeyUp(KeyCode.A)
             || Input.GetKeyUp(KeyCode.S)
@@ -107,6 +125,7 @@ public class PlayerMoveController : MonoBehaviour
             move_x = 0;
             move_z = 0;
         }
+
         //重力
         if (!characterController.isGrounded)
         {
@@ -158,14 +177,59 @@ public class PlayerMoveController : MonoBehaviour
     /// <summary>
     /// 動くオブジェクトの角度
     /// </summary>
-    void ParentRotateSet() {
+    void ParentRotateSet(KeyCode keyCode) {
         //オブジェクトを回転
         var old_y = x_pivot.transform.eulerAngles.y;
-        this.transform.localEulerAngles = new Vector3(0, x_pivot.transform.eulerAngles.y, 0);
+        switch (keyCode)
+        {
+            case KeyCode.W:
+                this.transform.localEulerAngles = new Vector3(0, Camera.main.transform.eulerAngles.y, 0);
+                break;
+
+            case KeyCode.S:
+                this.transform.localEulerAngles = new Vector3(0,180 + Camera.main.transform.eulerAngles.y, 0);
+                break;
+
+            case KeyCode.D:
+                this.transform.localEulerAngles = new Vector3(0, Camera.main.transform.eulerAngles.y + 90, 0);
+                break;
+
+            case KeyCode.A:
+                this.transform.localEulerAngles = new Vector3(0, Camera.main.transform.eulerAngles.y - 90, 0);
+                break;
+
+            default:
+                break;
+        }
+        x_pivot.transform.eulerAngles = new Vector3(0, old_y, 0);
+    }
+
+    /// <summary>
+    /// 動くオブジェクトの角度
+    /// </summary>
+    void ParentRotateSet(KeyCode keyCode1, KeyCode keyCode2)
+    {
+        //オブジェクトを回転
+        var old_y = x_pivot.transform.eulerAngles.y;
+        if (keyCode1 == KeyCode.W && keyCode2 == KeyCode.D) {
+            this.transform.localEulerAngles = new Vector3(0, Camera.main.transform.eulerAngles.y + 45, 0);
+        }
+        if (keyCode1 == KeyCode.S && keyCode2 == KeyCode.D)
+        {
+            this.transform.localEulerAngles = new Vector3(0, Camera.main.transform.eulerAngles.y + 135, 0);
+        }
+        if (keyCode1 == KeyCode.S && keyCode2 == KeyCode.A)
+        {
+            this.transform.localEulerAngles = new Vector3(0, Camera.main.transform.eulerAngles.y + 225, 0);
+        }
+        if (keyCode1 == KeyCode.W && keyCode2 == KeyCode.A)
+        {
+            this.transform.localEulerAngles = new Vector3(0, Camera.main.transform.eulerAngles.y + 315, 0);
+        }
         x_pivot.transform.eulerAngles = new Vector3(0, old_y, 0);
     }
 
     void DebugLog() {
-        Debug.Log(move_z);
+     
     }
 }
