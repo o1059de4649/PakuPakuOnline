@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-public class ItemModel : MonoBehaviour
+public class ItemController : MonoBehaviour
 {
     // Start is called before the first frame update
     #region プロパティ

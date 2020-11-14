@@ -41,6 +41,7 @@ public class CommonController : MonoBehaviour
     /// </summary>
     static private List<ItemModel> SetAllSettings() {
         var result = new List<ItemModel>();
+        //DBから取得する処理
         return result;
     }
 }
