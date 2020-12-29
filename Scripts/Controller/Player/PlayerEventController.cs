@@ -44,31 +44,37 @@ public class PlayerEventController : MonoBehaviour
         // Rayが衝突したかどうか
         if (Physics.Raycast(mouseRay, out hit,5))
         {
+            if (hit.collider.gameObject.tag == "Untagged" 
+                || hit.collider.gameObject.tag == "UTrrrain"
+                )
+            {
+                OffText();
+            }
             //スポナーへのアクション
             if (hit.collider.gameObject.tag == CommonController.tagList[(int)CommonController.Tags.spawer])
             {
                 var count = (int)CommonController.Tags.spawer;
-                OffText();
                 if (uiList.Count > count) uiList[count].SetActive(true);
                 if (Input.GetKeyDown(KeyCode.V))
                 {
                     var com = hit.collider.gameObject.GetComponent<RandomSpawner>();
                     if (com == null) return;
                     com.SpawnerItem();
+                    OffText();
                 }
             }
             //アイテムのアクション
             if (hit.collider.gameObject.tag == CommonController.tagList[(int)CommonController.Tags.item])
             {
                 var count = (int)CommonController.Tags.item;
-                OffText();
                 if (uiList.Count > count) uiList[count].SetActive(true);
                 if (Input.GetKeyDown(KeyCode.V))
                 {
-                    var com = hit.collider.gameObject.GetComponent<ItemModel>();
+                    var com = hit.collider.gameObject.GetComponent<ItemController>();
                     if (com == null) return;
-                    uiList[count].GetComponent<Text>().text = com.item_name;
+                    uiList[count].GetComponent<Text>().text = com.mItemModel.name;
                     com.GetItemEvent();
+                    OffText();
                 }
             }
         }

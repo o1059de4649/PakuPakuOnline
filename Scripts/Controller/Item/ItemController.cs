@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using PakuPakuOnLine.Model;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -9,11 +10,7 @@ public class ItemController : MonoBehaviour
     #region プロパティ
     [SerializeField]
     public long id = 0;
-    public string item_name { get; set; }
-    public long item_group_cd { get; set; }
-    public long price { get; set; }
-    public long value { get; set; }
-    public long rarity { get; set; }
+    public MItemModel mItemModel;
     public Rigidbody rigidbody;
     public bool isMove = false;
     public bool isUsed = false;
@@ -23,6 +20,7 @@ public class ItemController : MonoBehaviour
     void Start()
     {
         rigidbody = GetComponent<Rigidbody>();
+        SetStatus();
         StartAction();
     }
 
@@ -49,14 +47,7 @@ public class ItemController : MonoBehaviour
 
     public void SetStatus() {
         //共通部品から取得
-        var model = CommonController.itemModels.Where(x => x.id == this.id).ToList().First();
-        id = model.id;
-        item_name = model.item_name;
-        this.name = model.item_name;
-        this.item_group_cd = model.item_group_cd;
-        this.price = model.price;
-        this.rarity = model.rarity;
-        this.value = model.value;
+        mItemModel = CommonController.itemModels.Where(x => x.id == this.id).ToList().First();
     }
 
     /// <summary>

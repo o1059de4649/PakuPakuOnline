@@ -1,6 +1,11 @@
-﻿using PakuPakuOnLine.Model;
+﻿using System;
+using PakuPakuOnLine.Model;
 using System.Collections.Generic;
 using System.Data.SqlClient;
+using NEETLibrary;
+using System.Collections.Specialized;
+using NEETLibrary.Tiba.Com.SqlConnection;
+using NEETLibrary.Tiba.Com.Methods;
 
 namespace PakuPakuOnLine.Repository
 {
@@ -8,31 +13,30 @@ namespace PakuPakuOnLine.Repository
     {
         public List<MItemModel> GetMItemAll(string connectionString)
         {
-            using (SqlConnection connection = new SqlConnection(connectionString))
+            var resultList = new List<MItemModel>();
+
+            Handler.URL = connectionString;
+            var values = new NameValueCollection();
+            values["sql"] = SQLCreater.MasterAllGetSQL("m_item");
+            values["table"] = "m_item";
+            string result = Handler.DoPost(values);
+            var dicList = Handler.ConvertDeserialize(result);
+            foreach (var item in dicList)
             {
-                var resultList = new List<MItemModel>();
+                MItemModel model = new MItemModel();
 
-                connection.Open();
-                var queryString = "SELECT * FROM dbo.m_item";
-                SqlCommand command = new SqlCommand(queryString, connection);
-                var result = command.ExecuteReader();
-                while (result.Read())
-                {
-                    MItemModel model = new MItemModel();
-
-                    model.id = result.GetInt64(0);
-                    model.name = result.GetString(1);
-                    model.item_group_cd = result.GetString(2);
-                    model.price = result.GetInt64(3);
-                    model.value = result.GetInt64(4);
-                    model.rarity = result.GetInt32(5);
-                    model.rarityeffect_type = result.GetInt32(6);
-
-                    resultList.Add(model);
-                }
-
-                return resultList;
+                model.id = item[nameof(model.id)].ToString().ToLong().Value;
+                model.name = item[nameof(model.name)].ToString();
+                model.item_group_cd = item[nameof(model.item_group_cd)].ToString().ToLong().Value;
+                model.price = item[nameof(model.price)].ToString().ToLong().Value;
+                model.value = item[nameof(model.value)].ToString().ToLong().Value;
+                model.rarity = item[nameof(model.rarity)].ToString().ToInt().Value;
+                model.rarityeffect_type = item[nameof(model.rarityeffect_type)].ToString().ToInt().Value;
+                resultList.Add(model);
             }
+
+            return resultList;
+
         }
     }
 }

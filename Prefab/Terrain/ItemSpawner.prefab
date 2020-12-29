@@ -117,6 +117,7 @@ MonoBehaviour:
   height: 1
   spawnGameObjects:
   - {fileID: 55260034785921632, guid: a211c609f900e8140abe205968a4f726, type: 3}
+  idList: 01000000020000000300000004000000
 --- !u!135 &-3388211000364969449
 SphereCollider:
   m_ObjectHideFlags: 0

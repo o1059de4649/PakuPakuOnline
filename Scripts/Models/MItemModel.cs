@@ -10,7 +10,7 @@ namespace PakuPakuOnLine.Model
     {
         public long id {get; set;} 
         public string name {get; set;} 
-        public string item_group_cd { get; set;} 
+        public long item_group_cd { get; set;} 
         public long price { get; set;} 
         public long value { get; set;} 
         public int rarity { get; set;} 

@@ -30,7 +30,7 @@ public class EnemyMoveController : MonoBehaviour
 
     private void Move()
     {
-        this.transform.eulerAngles();
+        //this.transform.eulerAngles();
         //ランダム歩行
         characterController.Move(transform.forward * 10);
         

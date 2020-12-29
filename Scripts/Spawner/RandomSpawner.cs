@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using PakuPakuOnLine.Model;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -12,6 +13,7 @@ public class RandomSpawner : MonoBehaviour
     public float positionRange = 5.0f;
     public float height = 5.0f;
     public List<GameObject> spawnGameObjects;
+    public List<int> idList;
     // Start is called before the first frame update
     void Start()
     {
@@ -29,6 +31,7 @@ public class RandomSpawner : MonoBehaviour
     /// </summary>
     public void SpawnerItem() {
         if (isDestory) return;
+        //スポーン処理
         foreach (var item in spawnGameObjects)
         {
             var randomCount = Random.Range(minItemCount,maxItemCount+1);
@@ -39,6 +42,11 @@ public class RandomSpawner : MonoBehaviour
                 var z = this.transform.position.z + Random.Range(-positionRange, positionRange);
                 var randomPos = new Vector3(x, y, z);
                 var obj = Instantiate(item, randomPos, Quaternion.identity);
+                var controller = obj.GetComponent<ItemController>();
+                //アイテム決定
+                var idNum = Random.Range(0, idList.Count);
+                 var resultId = idList[idNum];
+                controller.id = resultId;
             }
         }
         isDestory = true;
