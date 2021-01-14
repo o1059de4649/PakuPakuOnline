@@ -11,6 +11,7 @@ public class PlayerEventController : MonoBehaviour
     /// </summary>
     public List<GameObject> uiList = new List<GameObject>();
     public Transform targetStart;
+    public GameObject ui;
     // Start is called before the first frame update
     void Start()
     {
@@ -21,8 +22,17 @@ public class PlayerEventController : MonoBehaviour
     void Update()
     {
         Ray();
+        UISystem();
     }
-
+    private void UISystem()
+    {
+        //TabキーでUI表示
+        if (Input.GetKeyDown(KeyCode.Tab)) 
+        {
+            ui.SetActive(!ui.activeSelf);
+            Cursor.visible = ui.activeSelf;
+        }
+    }
     private void OnTriggerStay(Collider other)
     {
 

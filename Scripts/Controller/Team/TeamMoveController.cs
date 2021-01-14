@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemyMoveController : MonoBehaviour
+public class TeamMoveController : MonoBehaviour
 {
     public bool isGravity = true;
     public CharacterController characterController;
@@ -15,7 +15,8 @@ public class EnemyMoveController : MonoBehaviour
     public Transform chaseTarget;
     public Transform parent_spawner;
     public Status status = Status.None;
-    public enum Status { 
+    public enum Status
+    {
         None,
         Chase,
         Dead
@@ -34,13 +35,14 @@ public class EnemyMoveController : MonoBehaviour
         ChangeStatus();
 
         //ステータスによって行動を変える
-        switch (status) {
+        switch (status)
+        {
             case Status.None:
                 Move();
-            break;
+                break;
             case Status.Chase:
                 Chase();
-            break;
+                break;
         }
 
     }
@@ -55,7 +57,8 @@ public class EnemyMoveController : MonoBehaviour
         {
             status = Status.Chase;
         }
-        else {
+        else
+        {
             status = Status.None;
         }
     }
@@ -63,8 +66,9 @@ public class EnemyMoveController : MonoBehaviour
     /// <summary>
     /// 重力メソッド
     /// </summary>
-    void GravityMove() {
-        if (isGravity) 
+    void GravityMove()
+    {
+        if (isGravity)
         {
             characterController.Move(transform.up * -0.5f);
         }
@@ -77,13 +81,14 @@ public class EnemyMoveController : MonoBehaviour
     {
         //ストップフラグ
         if (_isStop) return;
-        
+
         //サイクルを回す
         _cycleTime += Time.deltaTime;
-        if (_cycleTime > Random.Range(cycleMinTime, cycleMaxTime)) {
+        if (_cycleTime > Random.Range(cycleMinTime, cycleMaxTime))
+        {
             //方向転換など
             //_isStop = true;
-            this.transform.eulerAngles = new Vector3(0,Random.Range(0,360),0);
+            this.transform.eulerAngles = new Vector3(0, Random.Range(0, 360), 0);
             _cycleTime = 0;
         }
         //ランダム歩行

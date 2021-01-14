@@ -25,7 +25,11 @@ public class CommonController : MonoBehaviour
     /// <summary>
     /// 全てのアイテム
     /// </summary>
-    public static readonly List<MItemModel> itemModels = SetAllSettings();
+    public static readonly List<MItemModel> itemModels = GetAllItems();
+    /// <summary>
+    /// 全ての敵情報
+    /// </summary>
+    public static readonly List<MEnemySettingModel> enemySettingModels = GetAllEnemys();
 
     // Start is called before the first frame update
     void Start()
@@ -40,9 +44,9 @@ public class CommonController : MonoBehaviour
     }
 
     /// <summary>
-    /// DBから取得
+    /// DBからItem取得
     /// </summary>
-    static private List<MItemModel> SetAllSettings() {
+    static private List<MItemModel> GetAllItems() {
 
         try
         {
@@ -56,6 +60,24 @@ public class CommonController : MonoBehaviour
             Cursor.visible = true;
             throw;
         }
+    }
 
+    /// <summary>
+    /// DBからEnemy取得
+    /// </summary>
+    static private List<MEnemySettingModel> GetAllEnemys()
+    {
+        try
+        {
+            //DBから取得する処理
+            var repo = new MEnemySettingRepository();
+            var result = repo.GetMEnemySettingModelAll(connectionString);
+            return result;
+        }
+        catch (Exception)
+        {
+            Cursor.visible = true;
+            throw;
+        }
     }
 }

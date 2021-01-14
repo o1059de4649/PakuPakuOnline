@@ -22,7 +22,7 @@ namespace NEETLibrary.Tiba.Com.Methods
         /// <param name="startIndex">開始インデックス</param>
         /// <param name="count">カウント</param>
         /// <returns></returns>
-        public static string SubStringEx(this string data, int startIndex, int count)
+        public static string SubStringEx(this string data,int startIndex,int count)
         {
             var result = data;
             if (count <= 0) count = 0;
@@ -32,8 +32,7 @@ namespace NEETLibrary.Tiba.Com.Methods
             {
                 result = result.Substring(startIndex, data.Length);
             }
-            else
-            {
+            else {
                 result = result.Substring(startIndex, count);
             }
             return result;
@@ -82,14 +81,13 @@ namespace NEETLibrary.Tiba.Com.Methods
             {
                 return result;
             }
-            else
-            {
+            else { 
                 return null;
             }
         }
 
         /// <summary>
-        /// 落ちないInt型
+        /// 落ちないlong型
         /// </summary>
         /// <param name="data">対象データ</param>
         /// <returns></returns>
@@ -107,28 +105,133 @@ namespace NEETLibrary.Tiba.Com.Methods
         }
 
         /// <summary>
-        /// 日付に変換
+        /// 落ちないfloat型
         /// </summary>
         /// <param name="data">対象データ</param>
-        /// <param name="fromFormat">元データフォーマット</param>
-        /// <param name="toFormat">新データフォーマット</param>
         /// <returns></returns>
-        public static DateTime? ToDateTime(this string data, string fromFormat)
+        public static float? ToFloat(this string data)
         {
-            //日付に変換
-            if (DateTime.TryParseExact(data, fromFormat, null, DateTimeStyles.None, out DateTime date))
+            //nullを返す
+            if (float.TryParse(data, out float result))
             {
-                return date;
+                return result;
             }
             else
             {
                 return null;
             }
         }
+
+        /// <summary>
+        /// 落ちないdouble型
+        /// </summary>
+        /// <param name="data">対象データ</param>
+        /// <returns></returns>
+        public static double? ToDouble(this string data)
+        {
+            //nullを返す
+            if (double.TryParse(data, out double result))
+            {
+                return result;
+            }
+            else
+            {
+                return null;
+            }
+        }
+
+        /// <summary>
+        /// 落ちないInt型
+        /// </summary>
+        /// <param name="data">対象データ</param>
+        /// <returns></returns>
+        public static int ToIntValue(this string data)
+        {
+            //0を返す
+            if (int.TryParse(data, out int result))
+            {
+                return result;
+            }
+            else
+            {
+                return 0;
+            }
+        }
+
+        /// <summary>
+        /// 落ちないlong型
+        /// </summary>
+        /// <param name="data">対象データ</param>
+        /// <returns></returns>
+        public static long ToLongValue(this string data)
+        {
+            //0を返す
+            if (long.TryParse(data, out long result))
+            {
+                return result;
+            }
+            else
+            {
+                return 0;
+            }
+        }
+
+        /// <summary>
+        /// 落ちないfloat型
+        /// </summary>
+        /// <param name="data">対象データ</param>
+        /// <returns></returns>
+        public static float ToFloatValue(this string data)
+        {
+            //0を返す
+            if (float.TryParse(data, out float result))
+            {
+                return result;
+            }
+            else
+            {
+                return 0;
+            }
+        }
+
+        /// <summary>
+        /// 落ちないdouble型
+        /// </summary>
+        /// <param name="data">対象データ</param>
+        /// <returns></returns>
+        public static double? ToDoubleValue(this string data)
+        {
+            //0を返す
+            if (double.TryParse(data, out double result))
+            {
+                return result;
+            }
+            else
+            {
+                return 0;
+            }
+        }
+
+        /// <summary>
+        /// 日付に変換
+        /// </summary>
+        /// <param name="data">対象データ</param>
+        /// <param name="fromFormat">元データフォーマット</param>
+        /// <param name="toFormat">新データフォーマット</param>
+        /// <returns></returns>
+        public static DateTime? ToDateTime(this string data,string fromFormat) 
+        {
+            //日付に変換
+            if (DateTime.TryParseExact(data, fromFormat, null,DateTimeStyles.None, out DateTime date)) {
+                return date;
+            }
+            else {
+                return null;
+            }
+        }
     }
 
-    public static class CopyInterFace<T>
-    {
+    public static class CopyInterFace<T> {
 
         public static T DeepCopy(T src)
         {

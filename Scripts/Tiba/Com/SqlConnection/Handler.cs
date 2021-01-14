@@ -53,9 +53,9 @@ namespace NEETLibrary
             }
         }
 
-        public static List<Dictionary<string, object>> ConvertDeserialize(string jsonstr) {
+        public static List<Dictionary<object, object>> ConvertDeserialize(string jsonstr) {
             // デシリアライズしてDictionaryに戻します。
-            var json = JsonConvert.DeserializeObject<List<Dictionary<string, object>>>(jsonstr);
+            var json = JsonConvert.DeserializeObject<List<Dictionary<object, object>>>(jsonstr);
             return json;
         }
     }
